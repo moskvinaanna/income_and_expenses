@@ -19,7 +19,9 @@ SOURCES += src/income_and_expenses.cpp
 DISTFILES += qml/income_and_expenses.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
+    qml/pages/MyModel.qml \
     qml/pages/SecondPage.qml \
+    qml/pages/db.js \
     rpm/income_and_expenses.changes.in \
     rpm/income_and_expenses.changes.run.in \
     rpm/income_and_expenses.spec \

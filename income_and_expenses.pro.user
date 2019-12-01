@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.1, 2019-11-27T07:17:37. -->
+<!-- Written by QtCreator 4.9.1, 2019-12-01T02:58:39. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -394,7 +394,7 @@
      <value type="int">13</value>
      <value type="int">14</value>
     </valuelist>
-    <value type="QString" key="MerRunConfiguration.QmlLiveBenchWorkspace">C:/Users/Anna/income_and_expenses</value>
+    <value type="QString" key="MerRunConfiguration.QmlLiveBenchWorkspace">C:/Users/Anna/Desktop/lagutina/income_and_expenses</value>
     <value type="bool" key="MerRunConfiguration.QmlLiveEnabled">false</value>
     <value type="int" key="MerRunConfiguration.QmlLiveIpcPort">-1</value>
     <value type="int" key="MerRunConfiguration.QmlLiveOptions">3</value>
@@ -402,8 +402,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">1</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">income_and_expenses (on Sailfish OS Emulator 3.0.3.9)</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QmakeProjectManager.MerRunConfiguration:C:/Users/Anna/income_and_expenses/income_and_expenses.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">income_and_expenses (on Sailfish OS Emulator 3.0.3.9)2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QmakeProjectManager.MerRunConfiguration:C:/Users/Anna/Desktop/lagutina/income_and_expenses/income_and_expenses.pro</value>
     <value type="int" key="RemoteLinux.EnvironmentAspect.Version">1</value>
     <value type="QString" key="RemoteLinux.RunConfig.AlternateRemoteExecutable"></value>
     <value type="bool" key="RemoteLinux.RunConfig.UseAlternateRemoteExecutable">false</value>
