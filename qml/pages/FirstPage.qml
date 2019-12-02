@@ -1,10 +1,15 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "db.js" as JS
+import QtQuick.LocalStorage 2.0
 
 Page {
     id: page
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
+    Component.onCompleted: {
+        JS.dbInit()
+    }
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
@@ -14,15 +19,10 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Добавить новую операцию")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-            }
-            MenuItem {
-                text: qsTr("Редактировать операцию")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-            }
-            MenuItem {
-                text: qsTr("Удалить операцию")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                onClicked: function(){
+                    listmodel.append({id: JS.dbInsert("расход", "еда", 100, "вкусно"),
+                                         category: "еда"})
+                }
             }
             MenuItem {
                 text: qsTr("Статистика")
@@ -30,25 +30,44 @@ Page {
             }
         }
 
-        // Tell SilicaFlickable the height of its content.
-        contentHeight: column.height
-
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
-        Column {
-            id: column
-
-            width: page.width
-            spacing: Theme.paddingLarge
-            PageHeader {
+        SilicaListView {
+            id: listView
+            model: ListModel{
+                id: listmodel
+                Component.onCompleted: JS.dbReadAll()
+            }
+            anchors.fill: parent
+            header: PageHeader {
                 title: qsTr("Доходы и расходы")
             }
-            Label {
-                x: Theme.horizontalPageMargin
-                text: qsTr("Hello Sailors")
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
+
+            delegate: ListItem {
+                id: delegate
+                Label {
+                    id: label
+                x: Theme.paddingLarge
+                text: category
+                anchors.verticalCenter: parent.verticalCenter
+                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
             }
+            menu: ContextMenu {
+                MenuLabel {
+                    text: "Контекстное меню"
+                }
+                MenuItem {
+                    text: "Удалить операцию"
+                    onClicked: {
+                        JS.dbDeleteRow(listmodel.get(index).id)
+                        listmodel.remove(index)
+                    }
+                }
+                MenuItem {
+                    text: "Редактировать операцию"
+                    onClicked: label.font.italic = !label.font.italic
+                }
+            }
+        }
+            VerticalScrollDecorator {}
         }
     }
 }

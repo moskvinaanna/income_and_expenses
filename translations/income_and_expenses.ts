@@ -11,19 +11,7 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <source>Hello Sailors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Добавить новую операцию</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Редактировать операцию</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Удалить операцию</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

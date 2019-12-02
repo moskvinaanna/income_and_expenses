@@ -5,6 +5,7 @@ function dbInit()
         db.transaction(function (tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS IncomesAndExpenses (type text, category text, sum float, comment text)')
         })
+
     } catch (err) {
         console.log("Error creating table in database: " + err)
     };
@@ -20,16 +21,17 @@ function dbGetHandle()
     }
     return db
 }
+
 function dbReadAll()
 {
     var db = dbGetHandle()
     db.transaction(function (tx) {
         var results = tx.executeSql(
-                    'SELECT rowid, category, sum FROM notes order by rowid desc')
+                    'SELECT rowid, category, sum FROM IncomesAndExpenses order by rowid desc')
         for (var i = 0; i < results.rows.length; i++) {
             listmodel.append({
                                  id: results.rows.item(i).rowid,
-                                 note: results.rows.item(i).note
+                                 category: results.rows.item(i).category
                              })
         }
     })
@@ -39,7 +41,7 @@ function dbInsert(Rtype, Rcategory, Rsum, Rcomment)
     var db = dbGetHandle()
     var rowid = 0;
     db.transaction(function (tx) {
-        tx.executeSql('INSERT INTO notes VALUES(?, ?, ?, ?)',
+        tx.executeSql('INSERT INTO IncomesAndExpenses VALUES(?, ?, ?, ?)',
                       [Rtype, Rcategory, Rsum, Rcomment])
         var result = tx.executeSql('SELECT last_insert_rowid()')
         rowid = result.insertId
@@ -59,6 +61,6 @@ function dbUpdateRow(RId, Rtype, Rcategory, Rsum, Rcomment)
 {
     var db = dbGetHandle()
     db.transaction(function (tx) {
-        tx.executeSql('update IncomesAndExpenses set type = ?,  where rowid = ?', [RId])
+        tx.executeSql('update IncomesAndExpenses set type = ?, category = ?, sum = ?, comment = ?  where rowid = ?', [Rtype, Rcategory, Rsum, Rcomment, RId])
     })
 }
