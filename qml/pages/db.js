@@ -27,11 +27,13 @@ function dbReadAll()
     var db = dbGetHandle()
     db.transaction(function (tx) {
         var results = tx.executeSql(
-                    'SELECT rowid, category, sum FROM IncomesAndExpenses order by rowid desc')
+                    'SELECT rowid, type, category, sum FROM IncomesAndExpenses order by rowid desc')
         for (var i = 0; i < results.rows.length; i++) {
             listmodel.append({
                                  id: results.rows.item(i).rowid,
-                                 category: results.rows.item(i).category
+                                 category: results.rows.item(i).category,
+                                 type: results.rows.item(i).type,
+                                 sum: results.rows.item(i).type == "расход"? "-%1".arg(results.rows.item(i).sum): "+%1".arg(results.rows.item(i).sum)
                              })
         }
     })

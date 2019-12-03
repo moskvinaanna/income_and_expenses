@@ -26,7 +26,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Статистика")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                onClicked:pageStack.push(Qt.resolvedUrl("SecondPage.qml"), {id: 13})
             }
         }
 
@@ -50,6 +50,13 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
             }
+                Label {
+                    id: label2
+                    text: sum
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                }
             menu: ContextMenu {
                 MenuLabel {
                     text: "Контекстное меню"

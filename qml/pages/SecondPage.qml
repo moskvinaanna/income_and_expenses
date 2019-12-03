@@ -3,12 +3,13 @@ import Sailfish.Silica 1.0
 
 Page {
     id: page
+    property var id
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
     SilicaListView {
-        id: listView
+        id: listView2
         model: 20
         anchors.fill: parent
         header: PageHeader {
@@ -19,7 +20,7 @@ Page {
 
             Label {
                 x: Theme.horizontalPageMargin
-                text: qsTr("Item") + " " + index
+                text: qsTr("Item") + " " + id
                 anchors.verticalCenter: parent.verticalCenter
                 color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
             }
