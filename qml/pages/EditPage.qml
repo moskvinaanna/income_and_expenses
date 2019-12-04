@@ -3,43 +3,6 @@ import Sailfish.Silica 1.0
 import "db.js" as JS
 import QtQuick.LocalStorage 2.0
 
-//Page {
-//    id: page
-//    property var id
-
-
-//    allowedOrientations: Orientation.All
-
-//    SilicaListView {
-//        id: listView3
-//        model: 20
-//        anchors.fill: parent
-//        header: PageHeader {
-//            title: qsTr("Edit Page")
-//        }
-//        delegate: BackgroundItem {
-//            id: delegate
-
-////            Label {
-////                x: Theme.horizontalPageMargin
-////                text: qsTr("Item") + " " + id
-////                anchors.verticalCenter: parent.verticalCenter
-////                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-////            }
-//            TextEdit {
-//                x: Theme.horizontalPageMargin
-//                    text: id
-//                    font.family: "Helvetica"
-//                    font.pointSize: 20
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-//                    focus: true
-//                }
-//            onClicked: console.log("Clicked " + index)
-//        }
-//        VerticalScrollDecorator {}
-//    }
-//}
 Page {
     property var expenseId
     //    canAccept: sumField.acceptableInput && sumField.text.length > 0
@@ -56,44 +19,73 @@ Page {
         anchors.fill: parent
         //        header: PageHeader {
         //            title: qsTr("Edit")
-
-        //        SilicaListView{
-        //            id: listview
-        //            model: ListModel{
-        //                id: lm
-        //                Component.onCompleted: JS.dbGetExpense(expenseId)
-        //            }
-        //            anchors.fill: parent
-        //            header: PageHeader {
-        //                title: qsTr("Edit")
-        //            }
-        ColumnView{
+        SilicaGridView{
             id: cv
-            width: parent.width
-            itemHeight: Theme.itemSizeSmall
+            anchors.fill: parent
             model: ListModel{
                 id: lm
                 Component.onCompleted: JS.dbGetExpense(expenseId)
             }
-            delegate: BackgroundItem {
+            delegate: Rectangle {
                 id:delegate
                 width: parent.width
-
+                Label{
+                    id: lbcat
+                    x: 50
+                    y: 50
+                    text: "Категория: "
+                }
                 TextField {
-                    x: Theme.horizontalPageMargin
-                    text:"Сумма: %1".arg(sum)
-                    placeholderText: "Сумма = %1".arg(sum)
+                    id: tfcat
+                    text: category
                     font.family: "Helvetica"
                     font.pointSize: 20
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-
+                    anchors.left: lbcat.right
+                    anchors.top: lbcat.top
                 }
-                onClicked: console.log(sum)
+                Label{
+                    id: lbdesc
+                    anchors.left: lbcat.left
+                    x: 50
+                    y: 150
+                    text: "Комментарий: "
+                }
+
+                TextField {
+                    id: tfdesc
+                    text: comment
+                    font.family: "Helvetica"
+                    font.pointSize: 20
+                    anchors.left: lbdesc.right
+                    y: 150
+                }
+                Label{
+                    id: lbsum
+                    x: 50
+                    y: 250
+                    text: "Сумма: "
+                }
+
+                TextField {
+                    id: tfsum
+                    text: sum
+                    font.family: "Helvetica"
+                    font.pointSize: 20
+                    anchors.left: lbsum.right
+                    y: 250
+                }
+
+                Button{
+                    anchors.horizontalCenter: parent.width/2
+                    y: 400
+                    text: "Сохранить изменения"
+                    onClicked: function(){
+                        lm.append({id: JS.dbUpdateRow(expenseId, TYPE, category, sum, comment)})
+                    }
+                }
             }
             VerticalScrollDecorator {}
         }
-        //    }
     }
 }
 
