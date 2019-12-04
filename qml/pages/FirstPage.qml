@@ -49,7 +49,7 @@ Page {
                 text: category
                 anchors.verticalCenter: parent.verticalCenter
                 color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-            }
+                }
                 Label {
                     id: label2
                     text: sum
@@ -70,7 +70,8 @@ Page {
                 }
                 MenuItem {
                     text: "Редактировать операцию"
-                    onClicked: label.font.italic = !label.font.italic
+//                    onClicked: label.font.italic = !label.font.italic
+                    onClicked:pageStack.push(Qt.resolvedUrl("EditPage.qml"), {expenseId: listmodel.get(index).id})
                 }
             }
         }
