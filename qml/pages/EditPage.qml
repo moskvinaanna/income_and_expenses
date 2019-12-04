@@ -80,7 +80,7 @@ Page {
                     y: 400
                     text: "Сохранить изменения"
                     onClicked: function(){
-                        lm.append({id: JS.dbUpdateRow(expenseId, "расход", category, sum, comment), category: "не еда"});
+                        JS.dbUpdateRow(expenseId, "расход", tfcat.text, tfsum.text, tfdesc.text);
                         pageStack.pop()
                     }
                 }

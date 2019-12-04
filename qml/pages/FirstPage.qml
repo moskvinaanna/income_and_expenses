@@ -10,7 +10,12 @@ Page {
     Component.onCompleted: {
         JS.dbInit()
     }
-
+    onStatusChanged: {
+        if (status == PageStatus.Active) {
+            listmodel.clear()
+            JS.dbReadAll()
+        }
+    }
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
@@ -71,7 +76,11 @@ Page {
                 MenuItem {
                     text: "Редактировать операцию"
 //                    onClicked: label.font.italic = !label.font.italic
-                    onClicked:pageStack.push(Qt.resolvedUrl("EditPage.qml"), {expenseId: listmodel.get(index).id})
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("EditPage.qml"), {expenseId: listmodel.get(index).id})
+                        listmodel.clear();
+                        JS.dbReadAll()
+                    }
                 }
             }
         }
