@@ -73,13 +73,16 @@ Page {
                     font.pointSize: 20
                     anchors.left: lbsum.right
                     y: 250
+                    validator: IntValidator { bottom: 0; top: 10000000 }
+                    inputMethodHints: Qt.ImhDigitsOnly
                 }
                 ComboBox {
                     id: combobox
                     width: 480
                     label: "Тип"
+                    x: 25
                     y: 350
-                    currentIndex: type == "pacход"? 0 : 1
+                    currentIndex: type == "pacход" ? 0 : 1
 
                     menu: ContextMenu {
                         MenuItem { text: "расход" }
@@ -88,12 +91,11 @@ Page {
                 }
 
                 Button{
-                    anchors.horizontalCenter: parent.width/2
-                    y: 500
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 700
                     text: "Сохранить изменения"
                     onClicked: function(){
                         JS.dbUpdateRow(expenseId, combobox.value, tfcat.text, tfsum.text, tfdesc.text);
-                        console.log(combobox.value);
                         pageStack.pop()
                     }
                 }
