@@ -74,13 +74,24 @@ Page {
                     anchors.left: lbsum.right
                     y: 250
                 }
+                ComboBox {
+                    id: combobox
+                    width: 480
+                    label: "Тип"
+                    y: 350
+
+                    menu: ContextMenu {
+                        MenuItem { text: "расход" }
+                        MenuItem { text: "доход" }
+                    }
+                }
 
                 Button{
                     anchors.horizontalCenter: parent.width/2
-                    y: 400
+                    y: 500
                     text: "Сохранить изменения"
                     onClicked: function(){
-                        JS.dbUpdateRow(expenseId, "расход", tfcat.text, tfsum.text, tfdesc.text);
+                        JS.dbUpdateRow(expenseId, combobox.value, tfcat.text, tfsum.text, tfdesc.text);
                         pageStack.pop()
                     }
                 }
