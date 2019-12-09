@@ -79,7 +79,7 @@ Page {
                     width: 480
                     label: "Тип"
                     y: 350
-                    currentIndex: type == "pacход"? 0 : 1
+                    currentIndex: type == "pacход" ? 0 : 1
 
                     menu: ContextMenu {
                         MenuItem { text: "расход" }
