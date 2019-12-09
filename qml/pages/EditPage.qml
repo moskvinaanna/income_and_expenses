@@ -82,12 +82,13 @@ Page {
                     label: "Тип"
                     x: 25
                     y: 350
-                    currentIndex: type == "pacход" ? 0 : 1
-
                     menu: ContextMenu {
                         MenuItem { text: "расход" }
                         MenuItem { text: "доход" }
                     }
+                    currentIndex: {if (type.toString() == "pacход" ) 0; else 1;}
+
+//                    currentItem: type.toString() == "pacход" ? "расход" : "доход"
                 }
 
                 Button{
@@ -95,6 +96,8 @@ Page {
                     y: 700
                     text: "Сохранить изменения"
                     onClicked: function(){
+                        console.log(type)
+                        console.log(combobox.value)
                         JS.dbUpdateRow(expenseId, combobox.value, tfcat.text, tfsum.text, tfdesc.text);
                         pageStack.pop()
                     }
