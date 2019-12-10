@@ -73,14 +73,32 @@ Page {
                     font.pointSize: 20
                     anchors.left: lbsum.right
                     y: 250
+                    validator: IntValidator { bottom: 0; top: 10000000 }
+                    inputMethodHints: Qt.ImhDigitsOnly
+                }
+                ComboBox {
+                    id: combobox
+                    width: 480
+                    label: "Тип"
+                    x: 25
+                    y: 350
+                    menu: ContextMenu {
+                        MenuItem { text: "расход" }
+                        MenuItem { text: "доход" }
+                    }
+                    currentIndex: {if (type.toString() == "pacход" ) 0; else 1;}
+
+//                    currentItem: type.toString() == "pacход" ? "расход" : "доход"
                 }
 
                 Button{
-                    anchors.horizontalCenter: parent.width/2
-                    y: 400
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 700
                     text: "Сохранить изменения"
                     onClicked: function(){
-                        JS.dbUpdateRow(expenseId, "расход", tfcat.text, tfsum.text, tfdesc.text);
+                        console.log(type)
+                        console.log(combobox.value)
+                        JS.dbUpdateRow(expenseId, combobox.value, tfcat.text, tfsum.text, tfdesc.text);
                         pageStack.pop()
                     }
                 }

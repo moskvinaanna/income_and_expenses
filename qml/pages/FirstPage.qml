@@ -77,7 +77,9 @@ Page {
                     text: "Редактировать операцию"
 //                    onClicked: label.font.italic = !label.font.italic
                     onClicked: {
-                        pageStack.push(Qt.resolvedUrl("EditPage.qml"), {expenseId: listmodel.get(index).id})
+                        console.log(type);
+                        pageStack.push(Qt.resolvedUrl("EditPage.qml"), {expenseId: listmodel.get(index).id});
+                        console.log(type);
                         listmodel.clear();
                         JS.dbReadAll()
                     }

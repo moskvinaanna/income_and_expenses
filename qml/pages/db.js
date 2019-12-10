@@ -34,7 +34,7 @@ function dbGetExpense(row_id)
                       category: results.rows.item(0).category,
                       comment: results.rows.item(0).comment,
                       type: results.rows.item(0).type,
-                      sum: results.rows.item(0).type == "расход"? "-%1".arg(results.rows.item(0).sum): "+%1".arg(results.rows.item(0).sum)
+                      sum: results.rows.item(0).sum
                   })
     })
 }
