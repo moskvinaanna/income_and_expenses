@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "db.js" as JS
+import QtQuick.LocalStorage 2.0
 
 Page {
     id: page
@@ -9,23 +11,43 @@ Page {
     allowedOrientations: Orientation.All
 
     SilicaListView {
-        id: listView2
-        model: 20
+        id: listView
+        model: ListModel{
+            id: listmodel
+            Component.onCompleted: JS.dbGetOperations()
+        }
         anchors.fill: parent
         header: PageHeader {
-            title: qsTr("Nested Page")
+            title: qsTr("Статистика")
         }
-        delegate: BackgroundItem {
-            id: delegate
 
+        delegate: ListItem {
+            id: delegate
             Label {
-                x: Theme.horizontalPageMargin
-                text: qsTr("Item") + " " + id
+                anchors.top:parent.top
+                id: label
+                x: Theme.paddingLarge
+                text: results
                 anchors.verticalCenter: parent.verticalCenter
                 color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
             }
-            onClicked: console.log("Clicked " + index)
+            //            Label {
+            //                id: label2
+            //                text: sum
+            //                anchors.right: parent.right
+            //                anchors.verticalCenter: parent.verticalCenter
+            //                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+            //            }
+
+
         }
-        VerticalScrollDecorator {}
+        Button{
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 700
+            text: "График"
+            onClicked: function(){
+                pageStack.push(Qt.resolvedUrl("Graphs.qml"))
+            }
+        }
     }
 }

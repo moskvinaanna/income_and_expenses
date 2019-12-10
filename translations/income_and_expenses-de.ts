@@ -26,12 +26,8 @@
 <context>
     <name>SecondPage</name>
     <message>
-        <source>Nested Page</source>
-        <translation>Unterseite</translation>
-    </message>
-    <message>
-        <source>Item</source>
-        <translation type="unfinished">Element</translation>
+        <source>Статистика</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

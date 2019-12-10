@@ -24,7 +24,20 @@ Page {
             anchors.fill: parent
             model: ListModel{
                 id: lm
-                Component.onCompleted: JS.dbGetExpense(expenseId)
+                Component.onCompleted:{
+                    if(expenseId !== 0)
+                        JS.dbGetExpense(expenseId)
+                    else
+                        lm.append(
+                                    {
+                                        id: 0,
+                                        category: "",
+                                        comment: "",
+                                        type: "",
+                                        sum: ""
+                                    }
+                                    )
+                }
             }
             delegate: Rectangle {
                 id:delegate
@@ -42,6 +55,8 @@ Page {
                     font.pointSize: 20
                     anchors.left: lbcat.right
                     anchors.top: lbcat.top
+                    placeholderText: "введите категорию"
+                    width: 400
                 }
                 Label{
                     id: lbdesc
@@ -58,6 +73,8 @@ Page {
                     font.pointSize: 20
                     anchors.left: lbdesc.right
                     y: 150
+                    placeholderText: "введите комментарий"
+                    width: 400
                 }
                 Label{
                     id: lbsum
@@ -75,6 +92,8 @@ Page {
                     y: 250
                     validator: IntValidator { bottom: 0; top: 10000000 }
                     inputMethodHints: Qt.ImhDigitsOnly
+                    placeholderText: "введите сумму"
+                    width: 400
                 }
                 ComboBox {
                     id: combobox
@@ -86,7 +105,13 @@ Page {
                         MenuItem { text: "расход" }
                         MenuItem { text: "доход" }
                     }
-                    currentIndex: {if (type.toString() == "pacход" ) 0; else 1;}
+
+
+                    Component.onCompleted: {
+                        console.log(type.toString() === "доход")
+                        console.log(type === "доход")
+                        currentIndex: type.toString() === "доход"? 1 : 0
+                    }
 
 //                    currentItem: type.toString() == "pacход" ? "расход" : "доход"
                 }
@@ -98,7 +123,10 @@ Page {
                     onClicked: function(){
                         console.log(type)
                         console.log(combobox.value)
-                        JS.dbUpdateRow(expenseId, combobox.value, tfcat.text, tfsum.text, tfdesc.text);
+                        if (expenseId !== 0){
+                            JS.dbUpdateRow(expenseId, combobox.value, tfcat.text, tfsum.text, tfdesc.text);}
+                        else
+                            JS.dbInsert(combobox.value, tfcat.text, tfsum.text, tfdesc.text)
                         pageStack.pop()
                     }
                 }

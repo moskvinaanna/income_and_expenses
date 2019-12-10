@@ -25,13 +25,12 @@ Page {
             MenuItem {
                 text: qsTr("Добавить новую операцию")
                 onClicked: function(){
-                    listmodel.append({id: JS.dbInsert("расход", "еда", 100, "вкусно"),
-                                         category: "еда"})
+                    pageStack.push(Qt.resolvedUrl("EditPage.qml"), {expenseId: 0})
                 }
             }
             MenuItem {
                 text: qsTr("Статистика")
-                onClicked:pageStack.push(Qt.resolvedUrl("SecondPage.qml"), {id: 13})
+                onClicked:pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
             }
         }
 

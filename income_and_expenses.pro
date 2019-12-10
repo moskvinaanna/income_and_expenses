@@ -20,6 +20,7 @@ DISTFILES += qml/income_and_expenses.qml \
     qml/cover/CoverPage.qml \
     qml/pages/EditPage.qml \
     qml/pages/FirstPage.qml \
+    qml/pages/Graphs.qml \
     qml/pages/SecondPage.qml \
     qml/pages/db.js \
     rpm/income_and_expenses.changes.in \

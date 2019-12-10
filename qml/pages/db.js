@@ -22,6 +22,53 @@ function dbGetHandle()
     return db
 }
 
+function dbGetOperations(){
+    var stat = "Последние операции: \n";
+    var db = dbGetHandle();
+    db.transaction(function (tx) {
+    var results = tx.executeSql(
+                'SELECT rowid, type, sum FROM IncomesAndExpenses ORDER BY rowid DESC LIMIT 10 ')
+
+    for (var i = 0; i < results.rows.length; i++){
+        stat += ((i+1) + ") "+ (results.rows.item(i).type === "расход"? "-" :"+") + results.rows.item(i).sum+"\n")
+    }
+    listmodel.append({
+                  results: stat
+              });
+    })
+}
+
+function dbGetOperationsPoints(call){
+    var res = [];
+    var db = dbGetHandle();
+    db.transaction(function (tx) {
+    var results = tx.executeSql(
+                'SELECT rowid, type, sum FROM IncomesAndExpenses ORDER BY rowid DESC LIMIT 10 ')
+
+    for (var i = 0; i < results.rows.length; i++){
+       //res.push(results.rows.item(i).type === "расход"? 0-results.rows.item(i).sum : results.rows.item(i).sum)
+        res.push(results.rows.item(i).sum)
+
+    }
+    call(res)
+    })
+}
+
+function dbGetMostPopularExpenses(){
+    var stat = "Самые популярные категории расходов: \n";
+    var db = dbGetHandle();
+    db.transaction(function (tx) {
+    var results = tx.executeSql(
+                'SELECT category, COUNT(category) FROM IncomesAndExpenses GROUP BY category ORDER BY COUNT(category) DESC LIMIT 10 ')
+
+    for (var i = 0; i < results.rows.length; i++){
+        stat += ((i+1) + ") "+ results.rows.item(i).category +"\n")
+    }
+    listmodel.append({
+                  results: stat
+              });
+    })
+}
 
 function dbGetExpense(row_id)
 {
@@ -29,13 +76,16 @@ function dbGetExpense(row_id)
     db.transaction(function (tx) {
         var results = tx.executeSql(
                     'SELECT rowid, type, category,comment, sum FROM IncomesAndExpenses WHERE rowid=?', [row_id])
-        lm.append({
-                      id: results.rows.item(0).rowid,
-                      category: results.rows.item(0).category,
-                      comment: results.rows.item(0).comment,
-                      type: results.rows.item(0).type,
-                      sum: results.rows.item(0).sum
-                  })
+
+        for (var i = 0; i < results.rows.length; i++){
+            lm.append({
+                          id: results.rows.item(0).rowid,
+                          category: results.rows.item(0).category,
+                          comment: results.rows.item(0).comment,
+                          type: results.rows.item(0).type,
+                          sum: results.rows.item(0).sum
+                      })
+        }
     })
 }
 
